@@ -1,47 +1,56 @@
 const fetch = require('node-fetch');
+const { Client, MessageAttachment } = require('discord.js');
+const client = new Client();
+
 
 var jsonobj;
-var urlstring
-
+var urlarray = [];
+var globalindex;
+var memechannel
 
 function getredditposts() {
-
-
-
-    fetch('https://www.reddit.com/r/ich_iel/top/.json?limit=1', {
+    fetch('https://www.reddit.com/r/dankmemes/rising/.json?limit=30', {
         method: 'GET'
     })
         .then(res => res.json())
         .then((json) => {
             jsonobj = json
-            urlstring = jsonobj.data.children[0].data.url
+            for (let i = 0; i <= 29; i++) {
+                urlarray[i] = jsonobj.data.children[i].data.url
+            }
         });
-
+    globalindex = 0
 };
 
-function printstring() {
-    getredditposts();
-    console.log(urlstring)
-
+function sendmeme(i) {
+    var meme = new MessageAttachment(urlarray[globalindex])
+    if (memechannel != null) {
+        memechannel.send(meme)
+        globalindex++
+    }
 }
 
 
-setInterval(printstring, 3000);
-
-const { Client, MessageAttachment } = require('discord.js');
-const client = new Client();
-
 client.on('ready', () => {
     console.log('I am ready!');
+    getredditposts();
+
 });
+
+
+function call() {
+    sendmeme(globalindex);
+    setTimeout(call, 60000);
+}
 
 client.on('message', message => {
     if (message.content === 'ich_iel') {
-        // Create the attachment using MessageAttachment
-        const attachment = new MessageAttachment(urlstring);
-        // Send the attachment in the message channel
-        message.channel.send(attachment);
+        const attachment = new MessageAttachment(urlarray[globalindex]);
+        memechannel = message.channel
+        sendmeme(globalindex);
+        call();
+
     }
 });
 
-client.login('aQK8-fbczAVbRV3Rvq-BTdJGJyEN7G_q');
+client.login('NzIwNjAzNjQwODEzMDYwMjA2.XuyBxg.STCeaaLmKEZfgIilQg7waUQb3fU');
