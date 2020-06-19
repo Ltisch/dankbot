@@ -20,6 +20,7 @@ function getredditposts() {
             }
         });
     globalindex = 0
+    setTimeout(getredditposts, 1000 * 60 * 60)
 };
 
 function sendmeme(i) {
@@ -40,14 +41,13 @@ client.on('ready', () => {
 
 function call() {
     sendmeme(globalindex);
-    setTimeout(call, 60000);
+    setTimeout(call, 1000 * 60 * 2);
 }
 
 client.on('message', message => {
     if (message.content === 'ich_iel') {
         const attachment = new MessageAttachment(urlarray[globalindex]);
         memechannel = message.channel
-        sendmeme(globalindex);
         call();
 
     }
