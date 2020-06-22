@@ -1,8 +1,7 @@
 const fetch = require('node-fetch');
 const { Client, MessageAttachment } = require('discord.js');
 const client = new Client();
-
-
+var spam = true;
 var jsonobj;
 var urlarray = [];
 var globalindex;
@@ -25,7 +24,7 @@ function getredditposts() {
 
 function sendmeme(i) {
     var meme = new MessageAttachment(urlarray[globalindex])
-    if (memechannel != null) {
+    if (memechannel != null && spam) {
         memechannel.send(meme)
         globalindex++
     }
@@ -41,15 +40,21 @@ client.on('ready', () => {
 
 function call() {
     sendmeme(globalindex);
-    setTimeout(call, 1000 * 60 * 2);
+    setTimeout(call, 1000 * 60 * 8);
 }
 
 client.on('message', message => {
-    if (message.content === 'ich_iel') {
+    if (message.content === 'spam here') {
         const attachment = new MessageAttachment(urlarray[globalindex]);
         memechannel = message.channel
         call();
 
+    }
+});
+
+client.on('message', message => {
+    if (message.content === 'end spam') {
+        spam = false
     }
 });
 
