@@ -8,6 +8,7 @@ var globalindex;
 var memechannel
 var min = 8
 const dotenv = require('dotenv');
+const { send } = require('process');
 dotenv.config();
 var to;
 
@@ -27,10 +28,17 @@ function getredditposts() {
 };
 
 
-function sendmeme(i) {
+function sendmeme() {
+
     var meme = new MessageAttachment(urlarray[globalindex])
+
     if (memechannel != null) {
-        memechannel.send(meme)
+
+        memechannel.send(meme).catch(err => {
+            globalindex++
+            sendmeme()
+        });
+
         globalindex++
 
         if (globalindex == 29) {
@@ -43,7 +51,6 @@ function sendmeme(i) {
 client.on('ready', () => {
     console.log('I am ready!');
     getredditposts();
-
 });
 
 
