@@ -6,6 +6,8 @@ var jsonobj;
 var urlarray = [];
 var globalindex;
 var memechannel
+const dotenv = require('dotenv');
+dotenv.config();
 
 function getredditposts() {
     fetch('https://www.reddit.com/r/dankmemes/rising/.json?limit=30', {
@@ -58,4 +60,4 @@ client.on('message', message => {
     }
 });
 
-client.login(process.env.API);
+client.login(process.env.API_KEY);

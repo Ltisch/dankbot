@@ -1,0 +1,29 @@
+{
+  "name": "dankbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "reddit.js",
+  "dependencies": {
+    "Promise": "^1.0.5",
+    "discord": "^0.8.2",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "fetch": "^1.1.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ltisch/dankbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ltisch/dankbot/issues"
+  },
+  "homepage": "https://github.com/Ltisch/dankbot#readme"
+}
